@@ -1,0 +1,7 @@
+title: Docus
+layout: docs
+url: "https://docus.dev"
+debug: false
+header:
+  title: strapi-plugin-rest-cache
+  logo: true
