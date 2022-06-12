@@ -1,7 +1,21 @@
 title: Docus
 layout: docs
-url: "https://docus.dev"
+
+url: "https://strapi-community.github.io/strapi-plugin-rest-cache"
+
+socials:
+  github: "strapi-community/strapi-plugin-rest-cache"
+
+aside:
+  level: 1
+
 debug: false
+
 header:
   title: strapi-plugin-rest-cache
   logo: true
+
+github:
+  root: docs/content
+  edit: true
+  releases: true

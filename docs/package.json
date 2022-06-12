@@ -5,11 +5,11 @@
   "scripts": {
     "dev": "nuxi dev",
     "build": "nuxi build",
-    "generate": "nuxi build",
+    "generate": "nuxi generate",
     "preview": "nuxi preview"
   },
   "devDependencies": {
-    "nuxt": "^3.0.0-rc.3",
-    "@strapi-community/docus-theme": "^0.1.1"
+    "@strapi-community/docus-theme": "^0.2.2",
+    "nuxt": "^3.0.0-rc.3"
   }
 }
