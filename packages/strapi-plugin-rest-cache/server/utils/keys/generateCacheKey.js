@@ -21,7 +21,10 @@ function generateCacheKey(
     headersSuffix = generateHeadersKey(ctx, keys.useHeaders);
   }
 
-  return `${ctx.request.path}?${querySuffix}&${headersSuffix}`;
+  // standardize url paths by removing trailing slashes
+  const requestPath = ctx.request.path.replace(/\/$/, '');
+
+  return `${requestPath}?${querySuffix}&${headersSuffix}`;
 }
 
 module.exports = { generateCacheKey };
