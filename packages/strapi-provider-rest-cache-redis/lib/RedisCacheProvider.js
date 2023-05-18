@@ -29,7 +29,7 @@ class RedisCacheProvider extends CacheProvider {
    */
   async set(key, val, maxAge = 3600) {
     const options = {
-      ttl: maxAge / 1000,
+      ttl: maxAge * 1000,
     };
     return this.cache.set(key, val, options);
   }
