@@ -26,6 +26,7 @@ class CouchbaseCacheProvider extends CacheProvider {
    * @param {number=} maxAge
    */
   async set(key, val, maxAge = 3600) {
+    // TODO: When we upgrade the cache manager >=5.x.x, need to multiply this not divide
     const options = {
       ttl: maxAge / 1000,
     };
