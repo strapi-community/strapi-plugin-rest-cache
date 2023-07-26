@@ -1,5 +1,6 @@
 ---
-title: Admin Routes
+sidebar_label: Admin Routes
+sidebar_position: 2
 ---
 
 # Admin Routes
