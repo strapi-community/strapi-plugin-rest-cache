@@ -35,9 +35,6 @@
   "devDependencies": {
     "0x": "^5.2.1",
     "@giscus/vue": "^2.2.6",
-    "@strapi-community/eslint-config": "^0.2.0",
-    "@strapi-community/eslint-config-admin": "^0.2.0",
-    "@strapi-community/eslint-config-tests": "^0.2.0",
     "@vuepress/plugin-register-components": "^2.0.0-beta.36",
     "@vuepress/plugin-search": "^2.0.0-beta.36",
     "autocannon": "^7.7.1",
@@ -57,16 +54,12 @@
     "vuepress": "^2.0.0-beta.36",
     "yorkie": "^2.0.0"
   },
-  "gitHooks": {
-    "pre-commit": "lint-staged"
-  },
   "engines": {
     "node": ">=14.0.0",
     "npm": ">=6.0.0"
   },
   "lint-staged": {
     "{packages,playgrounds}/**/*.{ts,js}": [
-      "eslint --fix",
       "prettier --write"
     ],
     "docs/**/*.md": [
