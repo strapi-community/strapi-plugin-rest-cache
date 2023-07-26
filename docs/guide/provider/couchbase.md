@@ -1,6 +1,5 @@
 ---
-sidebar_label: Couchbase Provider
-sidebar_position: 4
+title: Couchbase provider
 ---
 
 # Couchbase provider

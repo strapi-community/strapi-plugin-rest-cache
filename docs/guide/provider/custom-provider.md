@@ -1,6 +1,5 @@
 ---
-sidebar_label: Custom Provider
-sidebar_position: 5
+title: Custom provider
 ---
 
 # Create a custom provider
