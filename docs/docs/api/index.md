@@ -1,5 +1,6 @@
 ---
-title: Services
+sidebar_label: Services
+sidebar_position: 1
 ---
 
 # Services
