@@ -1,5 +1,7 @@
 'use strict';
 
+const { toLower } = require('lodash/fp');
+const path = require('path');
 const { generateHeadersKey } = require('./generateHeadersKey');
 const { generateQueryParamsKey } = require('./generateQueryParamsKey');
 
@@ -21,8 +23,10 @@ function generateCacheKey(
     headersSuffix = generateHeadersKey(ctx, keys.useHeaders);
   }
 
-  // standardize url paths by removing trailing slashes
-  const requestPath = ctx.request.path.replace(/\/$/, '');
+  const requestPath = toLower(path.normalize(ctx.request.path)).replace(
+    /\/$/,
+    ''
+  );
 
   return `${requestPath}?${querySuffix}&${headersSuffix}`;
 }

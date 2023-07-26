@@ -67,6 +67,8 @@
     "@koa/router": "^10.1.1",
     "chalk": "^4.1.2",
     "debug": "^4.3.4",
+    "lodash": "^4.17.21",
+    "path": "^0.12.7",
     "strapi-provider-rest-cache-memory": "^4.2.7"
   },
   "devDependencies": {
