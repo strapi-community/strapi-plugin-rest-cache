@@ -15,7 +15,7 @@
     "@strapi/plugin-i18n": "4.11.7",
     "@strapi/plugin-users-permissions": "4.11.7",
     "@strapi/strapi": "4.11.7",
-    "sqlite3": "5.0.2",
+    "better-sqlite3": "8.0.1",
     "strapi-plugin-rest-cache": "^4.2.7",
     "strapi-provider-rest-cache-couchbase": "^4.2.7"
   },
