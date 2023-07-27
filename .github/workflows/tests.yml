@@ -27,7 +27,7 @@ jobs:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v1
         with:
-          node-version: 14.x
+          node-version: 18.x
 
       # cache node_modules
       - name: Cache dependencies
@@ -55,7 +55,7 @@ jobs:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v1
         with:
-          node-version: 14.x
+          node-version: 18.x
 
       # cache node_modules
       - name: Cache dependencies
@@ -74,7 +74,10 @@ jobs:
         run: yarn --frozen-lockfile
 
       - run: yarn postinstall:memory
-      - run: yarn test:e2e:memory
+
+      - name: Run Memory e2e tests
+        working-directory: playgrounds/memory
+        run: yarn test:e2e
 
   e2e_redis:
     runs-on: ubuntu-latest
@@ -93,7 +96,7 @@ jobs:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v1
         with:
-          node-version: 14.x
+          node-version: 18.x
 
       # cache node_modules
       - name: Cache dependencies
@@ -112,4 +115,7 @@ jobs:
         run: yarn --frozen-lockfile
 
       - run: yarn postinstall:redis
-      - run: yarn test:e2e:redis
+
+      - name: Run Redis e2e tests
+        working-directory: playgrounds/redis
+        run: yarn test:e2e

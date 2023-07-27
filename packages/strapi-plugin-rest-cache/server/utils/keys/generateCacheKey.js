@@ -1,5 +1,7 @@
 'use strict';
 
+const { toLower } = require('lodash/fp');
+const path = require('path');
 const { generateHeadersKey } = require('./generateHeadersKey');
 const { generateQueryParamsKey } = require('./generateQueryParamsKey');
 
@@ -21,7 +23,12 @@ function generateCacheKey(
     headersSuffix = generateHeadersKey(ctx, keys.useHeaders);
   }
 
-  return `${ctx.request.path}?${querySuffix}&${headersSuffix}`;
+  const requestPath = toLower(path.normalize(ctx.request.path)).replace(
+    /\/$/,
+    ''
+  );
+
+  return `${requestPath}?${querySuffix}&${headersSuffix}`;
 }
 
 module.exports = { generateCacheKey };

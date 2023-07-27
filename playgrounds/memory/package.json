@@ -12,10 +12,10 @@
     "test:e2e": "jest --detectOpenHandles --forceExit"
   },
   "dependencies": {
-    "@strapi/plugin-i18n": "4.1.5",
-    "@strapi/plugin-users-permissions": "4.1.5",
-    "@strapi/strapi": "4.1.5",
-    "sqlite3": "5.0.2",
+    "@strapi/plugin-i18n": "4.11.7",
+    "@strapi/plugin-users-permissions": "4.11.7",
+    "@strapi/strapi": "4.11.7",
+    "better-sqlite3": "8.0.1",
     "strapi-plugin-rest-cache": "^4.2.7"
   },
   "devDependencies": {
@@ -30,7 +30,7 @@
     "uuid": "89bd2494-df0e-4b1d-9e55-c46ec3e9952f"
   },
   "engines": {
-    "node": ">=12.x.x <=16.x.x",
+    "node": ">=12.x.x",
     "npm": ">=6.0.0"
   },
   "license": "MIT"

@@ -53,24 +53,24 @@
   },
   "homepage": "https://strapi-community.github.io/strapi-plugin-rest-cache/",
   "scripts": {
-    "lint": "run-s eslint:server:fix eslint:admin:fix prettier:fix",
+    "lint": "run-s eslint:server:fix prettier:fix",
     "eslint:server": "eslint ./server",
     "eslint:server:fix": "eslint ./server --fix",
-    "eslint:admin": "eslint ./admin/src",
-    "eslint:admin:fix": "eslint ./admin/src --fix",
     "prettier": "prettier --check ./{admin,server}/**/*",
     "prettier:fix": "prettier --write ./{admin,server}/**/*",
     "test": "run-s test:*",
-    "test:lint": "run-s eslint:server eslint:admin prettier"
+    "test:lint": "run-s eslint:server prettier"
   },
   "dependencies": {
     "@koa/router": "^10.1.1",
     "chalk": "^4.1.2",
     "debug": "^4.3.4",
+    "lodash": "^4.17.21",
+    "path": "^0.12.7",
     "strapi-provider-rest-cache-memory": "^4.2.7"
   },
   "devDependencies": {
-    "@strapi/strapi": "^4.1.5",
+    "@strapi/strapi": "^4.11.7",
     "koa": "^2.11.0",
     "npm-run-all": "^4.1.5",
     "react": "^17.0.2",

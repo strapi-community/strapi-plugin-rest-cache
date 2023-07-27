@@ -2,3 +2,4 @@ types
 tests
 **/node_modules/**
 CHANGELOG.md
+**/admin/**
