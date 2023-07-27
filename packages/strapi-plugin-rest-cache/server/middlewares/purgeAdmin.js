@@ -29,10 +29,7 @@ function createPurgeAdmin(options, { strapi }) {
 
     if (!(ctx.status >= 200 && ctx.status <= 300)) return;
 
-    await cacheStore.clearByUid(uid, {
-      ...params,
-      ...ctx.request.body,
-    });
+    await cacheStore.clearByUid(uid, params);
   };
 }
 
