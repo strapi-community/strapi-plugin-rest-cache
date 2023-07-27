@@ -77,7 +77,7 @@ jobs:
 
       - name: Run Memory e2e tests
         working-directory: playgrounds/memory
-        run: yarn test:e2e:memory
+        run: yarn test:e2e
 
   e2e_redis:
     runs-on: ubuntu-latest
@@ -118,4 +118,4 @@ jobs:
 
       - name: Run Redis e2e tests
         working-directory: playgrounds/redis
-        run: yarn test:e2e:redis
+        run: yarn test:e2e
