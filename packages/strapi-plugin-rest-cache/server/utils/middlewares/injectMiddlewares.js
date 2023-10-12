@@ -57,7 +57,13 @@ function injectMiddlewares(strapi, strategy) {
       );
 
       // If the route exists lets inject the middleware
-      if (indexID > -1) {
+      if (indexID === -1) {
+        debug(
+          '[WARNING] route "[%s] %s" not registered in strapi, ignoring...',
+          cacheRoute.method,
+          cacheRoute.path
+        );
+      } else {
         switch (strapiRoutes[indexID].method) {
           case 'DELETE':
           case 'PUT':
