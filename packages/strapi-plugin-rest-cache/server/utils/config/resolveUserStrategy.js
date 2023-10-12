@@ -5,10 +5,8 @@
  * @typedef {import('@strapi/strapi').Strapi} Strapi
  */
 
-const debug = require('debug')('strapi:strapi-plugin-rest-cache');
 const { getRelatedModelsUid } = require('./getRelatedModelsUid');
 const { deepFreeze } = require('./deepFreeze');
-const { routeExists } = require('./routeExists');
 const {
   CachePluginStrategy,
   CacheRouteConfig,
@@ -144,7 +142,7 @@ function resolveUserStrategy(strapi, userOptions) {
           ) {
             cacheConfig.routes.push(
               new CacheRouteConfig({
-                path: `/api${route.path}`,
+                path: `/${apiPrefix}${route.path}`,
                 paramNames: route.path.match(routeParams) ?? [],
                 method: route.method,
                 keys: new CacheKeysConfig(cacheConfig.keys),
@@ -162,7 +160,7 @@ function resolveUserStrategy(strapi, userOptions) {
           ) {
             cacheConfig.routes.push(
               new CacheRouteConfig({
-                path: `/api${route.path}`,
+                path: `/${apiPrefix}${route.path}`,
                 paramNames: route.path.match(routeParams) ?? [],
                 method: route.method,
                 keys: new CacheKeysConfig(cacheConfig.keys),
@@ -177,7 +175,7 @@ function resolveUserStrategy(strapi, userOptions) {
           ) {
             cacheConfig.routes.push(
               new CacheRouteConfig({
-                path: `/api${route.path}`,
+                path: `/${apiPrefix}${route.path}`,
                 paramNames: route.path.match(routeParams) ?? [],
                 method: route.method,
                 keys: new CacheKeysConfig(cacheConfig.keys),

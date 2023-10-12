@@ -4,14 +4,18 @@
  * @param {Strapi} strapi
  * @return {void}
  */
+
 function flattenRoutes(strapi) {
   let routes = [];
   for (const contentTypes of Object.values(strapi.api)) {
     routes = routes.concat(flatten(contentTypes));
   }
   // @TODO add prefix support before doing this
+  
+  const apiPrefix = strapi.config.get('api.rest.prefix');
+
   for (const route of routes) {
-    route.globalPath = `/api${route.path}`;
+    route.globalPath = `/${apiPrefix}${route.path}`;
   }
   return routes;
 }
