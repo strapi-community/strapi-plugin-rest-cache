@@ -17,6 +17,7 @@ const {
 } = require('../../types');
 
 const routeParamNameRegex = /:([^/]+)/g;
+const routeParams = /(?<=\/\:).*?(?=\/|$)/g;
 
 /**
  * @param {Strapi} strapi
@@ -39,7 +40,9 @@ function resolveUserStrategy(strapi, userOptions) {
     maxAge: userOptions.maxAge,
   };
 
+  // Creating cache Config
   for (const contentTypeOption of contentTypes) {
+    // string
     if (typeof contentTypeOption === 'string') {
       cacheConfigs.push({
         ...defaultModelConfig,
@@ -50,6 +53,7 @@ function resolveUserStrategy(strapi, userOptions) {
       continue;
     }
 
+    // Object
     /**
      * @type {CacheRouteConfig[]}
      */
@@ -71,6 +75,7 @@ function resolveUserStrategy(strapi, userOptions) {
           })
         );
       } else {
+        // @TODO get the route of the value maby replace route with handler.
         acc.push(
           new CacheRouteConfig({
             maxAge: defaultModelConfig.maxAge,
@@ -126,105 +131,64 @@ function resolveUserStrategy(strapi, userOptions) {
     // get strapi api prefix
     const apiPrefix = strapi.config.get('api.rest.prefix');
 
-    // https://docs.strapi.io/developer-docs/latest/developer-resources/database-apis-reference/rest-api.html#api-endpoints
-    // https://github.com/strapi/strapi/blob/master/packages/core/strapi/lib/core-api/routes/index.js
-    if (cacheConfig.singleType) {
-      const base = `${apiPrefix}/${contentType.info.singularName}`;
-
-      // delete
-      cacheConfig.routes.push(
-        new CacheRouteConfig({
-          path: base,
-          method: 'DELETE',
-          keys: new CacheKeysConfig(cacheConfig.keys),
-        })
-      );
-      // update
-      cacheConfig.routes.push(
-        new CacheRouteConfig({
-          path: base,
-          method: 'PUT',
-          keys: new CacheKeysConfig(cacheConfig.keys),
-        })
-      );
-      // find
-      cacheConfig.routes.push(
-        new CacheRouteConfig({
-          path: base,
-          method: 'GET',
-          keys: new CacheKeysConfig(cacheConfig.keys),
-          maxAge: cacheConfig.maxAge,
-          hitpass: cacheConfig.hitpass,
-        })
-      );
-    } else {
-      const base = `${apiPrefix}/${contentType.info.pluralName}`;
-
-      // create
-      cacheConfig.routes.push(
-        new CacheRouteConfig({
-          path: base,
-          method: 'POST',
-          keys: new CacheKeysConfig(cacheConfig.keys),
-        })
-      );
-      // delete
-      cacheConfig.routes.push(
-        new CacheRouteConfig({
-          path: `${base}/:id`,
-          method: 'DELETE',
-          keys: new CacheKeysConfig(cacheConfig.keys),
-          paramNames: ['id'],
-        })
-      );
-      // update
-      cacheConfig.routes.push(
-        new CacheRouteConfig({
-          path: `${base}/:id`,
-          method: 'PUT',
-          keys: new CacheKeysConfig(cacheConfig.keys),
-          paramNames: ['id'],
-        })
-      );
-
-      // find
-      cacheConfig.routes.push(
-        new CacheRouteConfig({
-          path: base,
-          method: 'GET',
-          keys: new CacheKeysConfig(cacheConfig.keys),
-          maxAge: cacheConfig.maxAge,
-          hitpass: cacheConfig.hitpass,
-        })
-      );
-      // findOne
-      cacheConfig.routes.push(
-        new CacheRouteConfig({
-          path: `${base}/:id`,
-          method: 'GET',
-          paramNames: ['id'],
-          keys: new CacheKeysConfig(cacheConfig.keys),
-          maxAge: cacheConfig.maxAge,
-          hitpass: cacheConfig.hitpass,
-        })
-      );
-    }
-  }
-
-  for (const cacheConfig of cacheConfigs) {
-    cacheConfig.routes = cacheConfig.routes.filter((route) => {
-      const exist = routeExists(strapi, route);
-
-      if (!exist) {
-        debug(
-          '[WARNING] route "[%s] %s" not registered in strapi, ignoring...',
-          route.method,
-          route.path
-        );
+    for (const routes of Object.values(
+      strapi.api[contentType.info.name].routes
+    )) {
+      for (const route of routes.routes) {
+        // @TODO remove path and method and use the one
+        if (cacheConfig.singleType === true) {
+          const singleTypeMethod = ['GET', 'PUT', 'DELETE'];
+          if (
+            singleTypeMethod.includes(route.method) &&
+            route.path === `/${contentType.info.singularName}`
+          ) {
+            cacheConfig.routes.push(
+              new CacheRouteConfig({
+                path: `/api${route.path}`,
+                paramNames: route.path.match(routeParams) ?? [],
+                method: route.method,
+                keys: new CacheKeysConfig(cacheConfig.keys),
+                maxAge: cacheConfig.maxAge,
+                hitpass: cacheConfig.hitpass,
+              })
+            );
+          }
+        } else {
+          const CollectionTypeMethod = ['GET', 'POST'];
+          const CollectionTypeIdMethod = ['GET', 'PUT', 'DELETE'];
+          if (
+            CollectionTypeMethod.includes(route.method) &&
+            route.path === `/${contentType.info.pluralName}`
+          ) {
+            cacheConfig.routes.push(
+              new CacheRouteConfig({
+                path: `/api${route.path}`,
+                paramNames: route.path.match(routeParams) ?? [],
+                method: route.method,
+                keys: new CacheKeysConfig(cacheConfig.keys),
+                maxAge: cacheConfig.maxAge,
+                hitpass: cacheConfig.hitpass,
+              })
+            );
+          }
+          if (
+            CollectionTypeIdMethod.includes(route.method) &&
+            route.path === `/${contentType.info.pluralName}/:id`
+          ) {
+            cacheConfig.routes.push(
+              new CacheRouteConfig({
+                path: `/api${route.path}`,
+                paramNames: route.path.match(routeParams) ?? [],
+                method: route.method,
+                keys: new CacheKeysConfig(cacheConfig.keys),
+                maxAge: cacheConfig.maxAge,
+                hitpass: cacheConfig.hitpass,
+              })
+            );
+          }
+        }
       }
-
-      return exist;
-    });
+    }
   }
 
   return deepFreeze(
