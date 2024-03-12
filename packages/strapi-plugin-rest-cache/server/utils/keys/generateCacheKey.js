@@ -23,7 +23,10 @@ function generateCacheKey(
     headersSuffix = generateHeadersKey(ctx, keys.useHeaders);
   }
 
-  const requestPath = toLower(ctx.request.path);
+  const requestPath = toLower(path.posix.normalize(ctx.request.path)).replace(
+    /\/$/,
+    ''
+  );
 
   return `${requestPath}?${querySuffix}&${headersSuffix}`;
 }
